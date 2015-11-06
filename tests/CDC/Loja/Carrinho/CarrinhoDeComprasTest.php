@@ -46,5 +46,28 @@ class CarrinhoDeComprasTest extends TestCase
         
         $this->assertEquals(600.0, $valor, null, 0.0001);
     }
+
+    public function testDeveAdicionarItens() 
+    {
+        $this->assertEmpty($this->carrinho->getProdutos());
+
+        $produto = new Produto('Geladeira', 450.0);
+
+        $this->carrinho->adiciona($produto);
+
+        $totalProdutos = count($this->carrinho->getProdutos());
+        $this->assertEquals(1, $totalProdutos);
+        $this->assertEquals($produto, $this->carrinho->getProdutos()[0]);
+    }
     
+    public function testListaDeProdutos() 
+    {
+        $this->carrinho
+             ->adiciona(new Produto('Geladeira', 450.00))
+             ->adiciona(new Produto('Microondas', 100.00));
+
+         $this->assertEquals(2, count($this->carrinho->getProdutos()));
+         $this->assertEquals(450.00, $this->carrinho->getProdutos()[0]->getValorUnitario());
+         $this->assertEquals(100.00, $this->carrinho->getProdutos()[1]->getValorUnitario());
+    }
 }
